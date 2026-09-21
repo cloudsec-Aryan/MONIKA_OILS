@@ -2,17 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Home, Search, ShoppingBag, Store } from "lucide-react";
+import { Home, Menu, Search, Store } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useStore } from "@/context/StoreProvider";
-import { cartCount, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 export function MobileTabBar() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
-  const { cart, wishlist, openDrawer, setSearchOpen, hydrated } = useStore();
-  const count = hydrated ? cartCount(cart) : 0;
-  const wishCount = hydrated ? wishlist.length : 0;
+  const { setSearchOpen, setMenuOpen } = useStore();
 
   useEffect(() => {
     setMounted(true);
@@ -27,7 +25,7 @@ export function MobileTabBar() {
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       aria-label="App navigation"
     >
-      <ul className="grid h-16 grid-cols-5">
+      <ul className="grid h-16 grid-cols-4">
         <li>
           <Link
             href="/"
@@ -56,29 +54,14 @@ export function MobileTabBar() {
           </button>
         </li>
         <li>
-          <Link
-            href="/wishlist"
-            className={cn(
-              itemClass,
-              mounted && pathname.startsWith("/wishlist") ? "text-brand-red" : "text-muted",
-            )}
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            className={cn(itemClass, "text-muted")}
+            aria-label="Open menu"
           >
-            <Heart size={20} />
-            Saved
-            {wishCount ? (
-              <span className="absolute right-[18%] top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-red px-1 text-[9px] text-white">
-                {wishCount}
-              </span>
-            ) : null}
-          </Link>
-        </li>
-        <li>
-          <button type="button" onClick={openDrawer} className={cn(itemClass, "text-muted")}>
-            <ShoppingBag size={20} />
-            Cart
-            <span className="absolute right-[18%] top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-mustard px-1 text-[9px] font-semibold text-ink">
-              {count}
-            </span>
+            <Menu size={20} />
+            Menu
           </button>
         </li>
       </ul>

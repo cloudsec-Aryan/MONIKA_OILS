@@ -10,16 +10,16 @@ const steps = [
 
 export function SeedToBottle() {
   return (
-    <section className="bg-ink py-16 text-white">
+    <section className="bg-brand-red py-16 text-white">
       <Container>
         <h2 className="text-center font-serif text-3xl sm:text-4xl">From Seed to Bottle</h2>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-white/70">
+        <p className="mx-auto mt-3 max-w-2xl text-center text-white/80">
           A simple path from the field to your kadhai, with attention at every stage.
         </p>
-        <ol className="mt-12 flex flex-col gap-6 lg:flex-row lg:items-start">
+        <ol className="mt-12 flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-start">
           {steps.map(([num, title], index) => (
             <li key={num} className="relative flex-1">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+              <div className="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-sm">
                 <span className="font-serif text-3xl text-mustard">{num}</span>
                 <h3 className="mt-3 font-serif text-xl">{title}</h3>
               </div>

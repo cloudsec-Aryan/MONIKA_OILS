@@ -36,17 +36,23 @@ const items = [
 
 export function TrustSection() {
   return (
-    <section className="py-16">
+    <section className="py-6 sm:py-12 lg:py-16">
       <Container>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-5 lg:grid-cols-3">
           {items.map((item) => (
             <article
               key={item.title}
-              className="rounded-2xl border border-cream-dark bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="rounded-2xl border border-[#E8D7B3] bg-white p-3 shadow-[0_10px_28px_rgba(181,31,31,0.05)] transition hover:-translate-y-1 hover:border-brand-red/20 hover:shadow-[0_18px_40px_rgba(181,31,31,0.1)] sm:rounded-3xl sm:p-6"
             >
-              <item.icon className="text-brand-red" />
-              <h3 className="mt-4 font-serif text-2xl">{item.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{item.text}</p>
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#FFF1D6] sm:h-11 sm:w-11">
+                <item.icon className="h-4 w-4 text-brand-red sm:h-5 sm:w-5" />
+              </span>
+              <h3 className="mt-2 text-[13px] font-semibold leading-tight text-ink sm:mt-4 sm:text-xl">
+                {item.title}
+              </h3>
+              <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-muted sm:mt-2 sm:line-clamp-none sm:text-sm sm:leading-6">
+                {item.text}
+              </p>
             </article>
           ))}
         </div>

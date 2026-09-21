@@ -23,6 +23,8 @@ type StoreContextValue = {
   toasts: Toast[];
   searchOpen: boolean;
   setSearchOpen: (open: boolean) => void;
+  menuOpen: boolean;
+  setMenuOpen: (open: boolean) => void;
   openDrawer: () => void;
   closeDrawer: () => void;
   addToCart: (productId: string, weight: string, quantity?: number) => void;
@@ -50,6 +52,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [lastAdded, setLastAdded] = useState<CartItem | null>(null);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -191,6 +194,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       toasts,
       searchOpen,
       setSearchOpen,
+      menuOpen,
+      setMenuOpen,
       openDrawer: () => setDrawerOpen(true),
       closeDrawer: () => setDrawerOpen(false),
       addToCart,
@@ -211,6 +216,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       lastAdded,
       toasts,
       searchOpen,
+      menuOpen,
       addToCart,
       removeFromCart,
       setQuantity,

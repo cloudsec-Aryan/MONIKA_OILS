@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -9,23 +10,22 @@ export function Logo({
   light?: boolean;
 }) {
   return (
-    <Link href="/" className={cn("inline-flex flex-col", className)}>
-      <span
+    <Link
+      href="/"
+      aria-label="Monika home"
+      className={cn("inline-flex shrink-0 items-center", className)}
+    >
+      <Image
+        src="/images/monika-logo.png"
+        alt="Monika Brand — 100% Pure Mustard Oil"
+        width={607}
+        height={411}
+        priority
         className={cn(
-          "text-xl font-semibold leading-none tracking-wide",
-          light ? "text-white" : "text-ink",
+          "h-12 w-auto max-w-[168px] object-contain object-left sm:h-14 sm:max-w-[200px]",
+          light && "drop-shadow-[0_2px_10px_rgba(0,0,0,0.28)]",
         )}
-      >
-        MONIKA
-      </span>
-      <span
-        className={cn(
-          "mt-1 text-[10px]",
-          light ? "text-mustard" : "text-muted",
-        )}
-      >
-        Pure Taste. Pure Tradition.
-      </span>
+      />
     </Link>
   );
 }

@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Heart, Search, ShoppingBag, Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Heart, Search, ShoppingBag, X, User } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/ui/Logo";
 import { useStore } from "@/context/StoreProvider";
 import { cartCount, cn } from "@/lib/utils";
@@ -16,13 +16,32 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
+function initials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
+}
+
 export function Header() {
   const pathname = usePathname();
-  const { cart, wishlist, user, openDrawer, setSearchOpen, logout, hydrated } =
-    useStore();
+  const {
+    cart,
+    wishlist,
+    user,
+    openDrawer,
+    setSearchOpen,
+    menuOpen,
+    setMenuOpen,
+    logout,
+    hydrated,
+  } = useStore();
   const [compact, setCompact] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
+  const accountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -36,8 +55,20 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
+    setMenuOpen(false);
+    setAccountOpen(false);
+  }, [pathname, setMenuOpen]);
+
+  useEffect(() => {
+    if (!accountOpen) return;
+    const onPointer = (event: MouseEvent) => {
+      if (!accountRef.current?.contains(event.target as Node)) {
+        setAccountOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onPointer);
+    return () => document.removeEventListener("mousedown", onPointer);
+  }, [accountOpen]);
 
   const count = hydrated ? cartCount(cart) : 0;
   const wishCount = hydrated ? wishlist.length : 0;
@@ -53,7 +84,7 @@ export function Header() {
         <div
           className={cn(
             "mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 transition-all sm:px-6 lg:px-8",
-            compact ? "h-16" : "h-[72px]",
+            compact ? "h-[68px]" : "h-[80px]",
           )}
         >
           <Logo />
@@ -79,14 +110,6 @@ export function Header() {
             >
               <Search size={16} />
               <span className="truncate">Search products</span>
-            </button>
-            <button
-              type="button"
-              className="rounded-full p-2 hover:bg-cream md:hidden"
-              aria-label="Search"
-              onClick={() => setSearchOpen(true)}
-            >
-              <Search size={20} />
             </button>
             <Link
               href="/wishlist"
@@ -131,13 +154,67 @@ export function Header() {
                 </Link>
               </div>
             )}
+
+            <div className="relative lg:hidden" ref={accountRef}>
+              <button
+                type="button"
+                aria-label={hydrated && user ? "Account" : "Login or sign up"}
+                aria-expanded={accountOpen}
+                onClick={() => setAccountOpen((open) => !open)}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FFF1D6] text-sm font-semibold text-brand-red ring-1 ring-[#E8D7B3]"
+              >
+                {hydrated && user ? initials(user.name) || <User size={18} /> : <User size={18} />}
+              </button>
+              {accountOpen ? (
+                <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-44 overflow-hidden rounded-2xl border border-[#E8D7B3] bg-white py-1 shadow-[0_16px_40px_rgba(36,36,36,0.12)]">
+                  {hydrated && user ? (
+                    <>
+                      <p className="truncate px-3 py-2 text-sm font-semibold text-ink">{user.name}</p>
+                      <button
+                        type="button"
+                        className="w-full px-3 py-2 text-left text-sm text-muted hover:bg-cream"
+                        onClick={() => {
+                          logout();
+                          setAccountOpen(false);
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/login"
+                        className="block px-3 py-2.5 text-sm hover:bg-cream"
+                        onClick={() => setAccountOpen(false)}
+                      >
+                        Login
+                      </Link>
+                      <Link
+                        href="/signup"
+                        className="block px-3 py-2.5 text-sm font-semibold text-brand-red hover:bg-cream"
+                        onClick={() => setAccountOpen(false)}
+                      >
+                        Sign up
+                      </Link>
+                    </>
+                  )}
+                </div>
+              ) : null}
+            </div>
+
             <button
               type="button"
-              className="rounded-full p-2 hover:bg-cream lg:hidden"
-              aria-label="Open menu"
-              onClick={() => setMobileOpen(true)}
+              className="relative flex h-10 w-10 items-center justify-center rounded-full bg-brand-red text-white shadow-sm shadow-brand-red/25 lg:hidden"
+              aria-label="Cart"
+              onClick={openDrawer}
             >
-              <Menu size={22} />
+              <ShoppingBag size={18} />
+              {count ? (
+                <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-mustard px-1 text-[9px] font-bold text-ink">
+                  {count}
+                </span>
+              ) : null}
             </button>
           </div>
         </div>
@@ -146,27 +223,27 @@ export function Header() {
       <div
         className={cn(
           "fixed inset-0 z-50 lg:hidden",
-          mobileOpen ? "pointer-events-auto" : "pointer-events-none",
+          menuOpen ? "pointer-events-auto" : "pointer-events-none",
         )}
       >
         <button
           type="button"
           className={cn(
             "absolute inset-0 bg-ink/40 transition",
-            mobileOpen ? "opacity-100" : "opacity-0",
+            menuOpen ? "opacity-100" : "opacity-0",
           )}
-          onClick={() => setMobileOpen(false)}
+          onClick={() => setMenuOpen(false)}
           aria-label="Close menu"
         />
         <nav
           className={cn(
             "absolute left-0 top-0 flex h-full w-[min(320px,86%)] flex-col bg-cream p-6 shadow-2xl transition-transform duration-300",
-            mobileOpen ? "translate-x-0" : "-translate-x-full",
+            menuOpen ? "translate-x-0" : "-translate-x-full",
           )}
         >
           <div className="mb-8 flex items-center justify-between">
             <Logo />
-            <button type="button" onClick={() => setMobileOpen(false)} aria-label="Close">
+            <button type="button" onClick={() => setMenuOpen(false)} aria-label="Close">
               <X />
             </button>
           </div>
@@ -179,28 +256,19 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+          <Link href="/wishlist" className="border-b border-cream-dark py-3 text-lg">
+            Saved
+          </Link>
           <button
             type="button"
             className="border-b border-cream-dark py-3 text-left text-lg"
             onClick={() => {
-              setMobileOpen(false);
+              setMenuOpen(false);
               setSearchOpen(true);
             }}
           >
             Search
           </button>
-          {hydrated && user ? (
-            <button type="button" className="mt-4 text-left text-sm" onClick={logout}>
-              Logout ({user.name})
-            </button>
-          ) : (
-            <div className="mt-4 flex gap-3 text-sm">
-              <Link href="/login">Login</Link>
-              <Link href="/signup" className="font-medium text-brand-red">
-                Sign up
-              </Link>
-            </div>
-          )}
         </nav>
       </div>
     </header>

@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/Container";
 
 export function FaqPreview() {
   return (
-    <section className="bg-cream/70 py-16">
+    <section className="hidden bg-cream/70 py-16 lg:block">
       <Container className="max-w-3xl">
         <h2 className="text-center font-serif text-3xl sm:text-4xl">Questions, answered</h2>
         <div className="mt-8">

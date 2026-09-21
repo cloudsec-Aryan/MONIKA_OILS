@@ -6,6 +6,7 @@ import { CartDrawer } from "@/components/layout/CartDrawer";
 import { SearchModal } from "@/components/layout/SearchModal";
 import { MobileTabBar } from "@/components/layout/MobileTabBar";
 import { PwaProvider } from "@/components/layout/PwaProvider";
+import { QueryPopup } from "@/components/layout/QueryPopup";
 import { useStore } from "@/context/StoreProvider";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -20,6 +21,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <PwaProvider />
       <CartDrawer />
       <SearchModal />
+      <QueryPopup />
       <div className="pointer-events-none fixed right-5 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-[70] space-y-2 lg:bottom-5">
         {toasts.map((toast) => (
           <div

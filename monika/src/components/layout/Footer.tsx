@@ -12,7 +12,7 @@ function SocialIcon({ path }: { path: string }) {
 
 export function Footer() {
   return (
-    <footer className="mt-auto hidden bg-ink text-white lg:block">
+    <footer className="mt-auto hidden bg-brand-red text-white lg:block">
       <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo light />

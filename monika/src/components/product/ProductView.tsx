@@ -71,17 +71,17 @@ export function ProductView({ product }: { product: Product }) {
               <QuantitySelector value={qty} onChange={setQty} />
             </div>
           </div>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <button
               type="button"
-              className="rounded-full bg-mustard px-6 py-3 text-sm font-semibold"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-mustard px-6 text-sm font-semibold text-ink shadow-md shadow-mustard/30 transition hover:bg-mustard-deep"
               onClick={() => addToCart(product.id, weight, qty)}
             >
               Add to Cart
             </button>
             <button
               type="button"
-              className="rounded-full bg-brand-red px-6 py-3 text-sm font-semibold text-white"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-brand-red px-6 text-sm font-semibold text-white shadow-md shadow-brand-red/30 transition hover:bg-brand-red-dark"
               onClick={() => {
                 addToCart(product.id, weight, qty);
                 router.push("/checkout");
@@ -91,7 +91,7 @@ export function ProductView({ product }: { product: Product }) {
             </button>
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-full border border-cream-dark px-5 py-3 text-sm"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-cream-dark bg-white px-5 text-sm sm:col-span-2"
               onClick={() => toggleWishlist(product.id)}
             >
               <Heart
