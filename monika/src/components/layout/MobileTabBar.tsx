@@ -21,7 +21,7 @@ export function MobileTabBar() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-cream-dark bg-white/95 backdrop-blur-md lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-cream-dark bg-white/95 backdrop-blur-md xl:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       aria-label="App navigation"
     >

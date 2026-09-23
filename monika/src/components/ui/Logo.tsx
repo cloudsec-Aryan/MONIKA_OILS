@@ -17,13 +17,13 @@ export function Logo({
     >
       <Image
         src="/images/monika-logo.png"
-        alt="Monika Brand — 100% Pure Mustard Oil"
-        width={607}
-        height={411}
+        alt="MONIKA oils and foods"
+        width={500}
+        height={500}
         priority
         className={cn(
-          "h-12 w-auto max-w-[168px] object-contain object-left sm:h-14 sm:max-w-[200px]",
-          light && "drop-shadow-[0_2px_10px_rgba(0,0,0,0.28)]",
+          "h-12 w-auto max-w-[140px] object-contain object-left sm:h-14 sm:max-w-[160px]",
+          light && "brightness-0 invert",
         )}
       />
     </Link>

@@ -12,7 +12,7 @@ function SocialIcon({ path }: { path: string }) {
 
 export function Footer() {
   return (
-    <footer className="mt-auto hidden bg-brand-red text-white lg:block">
+    <footer className="mt-auto hidden bg-brand-red text-white xl:block">
       <Container className="grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo light />
@@ -26,11 +26,13 @@ export function Footer() {
           <ul className="mt-4 space-y-2 text-sm text-white/75">
             {[
               ["/", "Home"],
-              ["/shop", "Shop"],
-              ["/about", "About"],
-              ["/quality", "Quality"],
-              ["/contact", "Contact"],
-              ["/login", "Login"],
+              ["/shop", "Oils"],
+              ["/foods", "Foods"],
+              ["/recipes", "Recipes"],
+              ["/blogs", "Blogs"],
+              ["/quality", "The Monika Difference"],
+              ["/about", "About Us"],
+              ["/contact", "Get in Touch"],
             ].map(([href, label]) => (
               <li key={href}>
                 <Link href={href} className="hover:text-mustard">

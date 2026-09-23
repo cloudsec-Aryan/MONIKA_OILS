@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/layout/CartDrawer";
@@ -10,12 +11,18 @@ import { QueryPopup } from "@/components/layout/QueryPopup";
 import { useStore } from "@/context/StoreProvider";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const { toasts } = useStore();
+  const isAdmin = pathname.startsWith("/admin");
+
+  if (isAdmin) {
+    return <>{children}</>;
+  }
 
   return (
     <>
       <Header />
-      <main className="flex-1 pb-20 lg:pb-0">{children}</main>
+      <main className="flex-1 pb-20 xl:pb-0">{children}</main>
       <Footer />
       <MobileTabBar />
       <PwaProvider />

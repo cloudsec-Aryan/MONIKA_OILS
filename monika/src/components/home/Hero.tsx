@@ -3,20 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BadgeCheck, Droplets, Flower2, ShieldCheck } from "lucide-react";
-import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
-
-const icons: Array<
-  | { src: string; label: string; Icon?: never }
-  | { Icon: typeof Droplets; label: string; src?: never }
-> = [
-  { src: "/images/monika-logo.png", label: "Since 1986" },
-  { Icon: Droplets, label: "100% Pure" },
-  { Icon: ShieldCheck, label: "Quality Tested" },
-  { Icon: Flower2, label: "Authentic Taste" },
-  { Icon: BadgeCheck, label: "Rich Aroma" },
-];
 
 const banners = [
   {
@@ -83,31 +70,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="overflow-hidden bg-cream">
-      <div className="hidden border-b border-cream-dark bg-white sm:block">
-        <Container className="flex items-center justify-center gap-4 overflow-x-auto py-3 no-scrollbar sm:gap-8">
-          {icons.map((item) => (
-            <div
-              key={item.label}
-              className="flex shrink-0 items-center gap-2 text-xs text-ink sm:text-sm"
-            >
-              {"src" in item && item.src ? (
-                <Image
-                  src={item.src}
-                  alt={item.label}
-                  width={32}
-                  height={22}
-                  className="h-6 w-auto object-contain"
-                />
-              ) : item.Icon ? (
-                <item.Icon size={18} className="text-[#B51F1F]" />
-              ) : null}
-              {item.label}
-            </div>
-          ))}
-        </Container>
-      </div>
-
+    <section className="overflow-hidden">
       <div
         className="relative w-full overflow-hidden"
         onTouchStart={onTouchStart}
@@ -124,7 +87,7 @@ export function Hero() {
           {banners.map((banner, i) => (
             <article
               key={banner.title}
-              className="relative h-[340px] shrink-0 overflow-hidden sm:h-[460px] lg:h-[580px]"
+              className="relative h-[min(78vh,640px)] shrink-0 overflow-hidden sm:h-[min(82vh,700px)] lg:h-[min(88vh,780px)]"
               style={{ width: `${100 / banners.length}%` }}
             >
               <Image
@@ -137,9 +100,9 @@ export function Hero() {
               />
 
               <div className="absolute inset-0 bg-gradient-to-r from-black/78 via-black/45 to-black/15" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
 
-              <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-end px-4 pb-10 sm:items-center sm:px-10 sm:pb-0 lg:px-14">
+              <div className="relative z-10 mx-auto flex h-full max-w-[1400px] items-end px-4 pb-10 pt-28 sm:items-center sm:px-10 sm:pb-0 sm:pt-24 lg:px-14">
                 <div className="max-w-[92%] pb-1 sm:max-w-xl lg:max-w-2xl">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#F6D27A] sm:text-sm sm:tracking-[0.22em]">
                     {banner.kicker}

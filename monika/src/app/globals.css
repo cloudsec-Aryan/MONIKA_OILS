@@ -114,3 +114,70 @@ h3,
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Crystal glass navbar — readable over dark hero */
+.nav-crystal {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(255, 250, 240, 0.78) 45%,
+      rgba(255, 255, 255, 0.8) 100%
+    );
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 14px 44px rgba(36, 36, 36, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 -1px 0 rgba(181, 31, 31, 0.06) inset;
+}
+
+.nav-crystal-compact {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 250, 240, 0.86) 50%,
+      rgba(255, 255, 255, 0.88) 100%
+    );
+  box-shadow:
+    0 16px 40px rgba(36, 36, 36, 0.18),
+    0 1px 0 rgba(255, 255, 255, 1) inset;
+}
+
+.nav-dropdown-glass {
+  background: rgba(255, 253, 248, 0.96);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid rgba(232, 215, 179, 0.95);
+  box-shadow:
+    0 22px 56px rgba(36, 36, 36, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset;
+}
+
+@keyframes nav-sheen {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.nav-crystal::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 65%
+  );
+  background-size: 220% 100%;
+  opacity: 0.35;
+  animation: nav-sheen 9s ease-in-out infinite;
+}
