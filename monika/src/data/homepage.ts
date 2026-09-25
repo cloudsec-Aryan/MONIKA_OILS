@@ -35,6 +35,7 @@ export const productSpotlights = [
   {
     id: "kachi-ghani",
     label: "P-1",
+    shortName: "Kachi Ghani",
     whyTitle: "Why Kachi Ghani?",
     why: "Slow-pressed character for kitchens that want a bold mustard note — traditionally valued for pungency and authentic aroma.",
     benefits: [
@@ -48,6 +49,7 @@ export const productSpotlights = [
   {
     id: "pure-mustard",
     label: "P-2",
+    shortName: "Pure Mustard",
     whyTitle: "Why Pure Mustard?",
     why: "Everyday oil when you want authentic mustard flavour without fuss — a dependable kitchen staple.",
     benefits: [
@@ -61,6 +63,7 @@ export const productSpotlights = [
   {
     id: "premium-mustard",
     label: "P-3",
+    shortName: "Premium",
     whyTitle: "Why Premium?",
     why: "A richer pour for weekends, guests, and special recipes — selected lots, fuller aroma.",
     benefits: [
