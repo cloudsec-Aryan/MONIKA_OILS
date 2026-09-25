@@ -1,24 +1,28 @@
 import { Hero } from "@/components/home/Hero";
-import { TrustSection } from "@/components/home/TrustSection";
-import { FeaturedProducts } from "@/components/home/FeaturedProducts";
-import { WhyMonika } from "@/components/home/WhyMonika";
-import { SeedToBottle } from "@/components/home/SeedToBottle";
-import { Reviews } from "@/components/home/Reviews";
+import { AboutTeaser } from "@/components/home/AboutTeaser";
+import { GlassPipe } from "@/components/home/GlassPipe";
+import { OceanOfHealth } from "@/components/home/OceanOfHealth";
+import { ProductSpotlight } from "@/components/home/ProductSpotlight";
+import { StoryFeatures } from "@/components/home/StoryFeatures";
+import { BookletSection } from "@/components/home/BookletSection";
+import { RefillEstimator } from "@/components/home/RefillEstimator";
 import { SpecialOffers } from "@/components/home/SpecialOffers";
-import { FaqPreview } from "@/components/home/FaqPreview";
+import { Reviews } from "@/components/home/Reviews";
 import { Newsletter } from "@/components/home/Newsletter";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <TrustSection />
-      <FeaturedProducts />
-      <WhyMonika />
-      <SeedToBottle />
-      <Reviews />
+      <AboutTeaser />
+      <GlassPipe />
+      <OceanOfHealth />
+      <ProductSpotlight />
+      <StoryFeatures />
+      <BookletSection />
+      <RefillEstimator />
       <SpecialOffers />
-      <FaqPreview />
+      <Reviews />
       <Newsletter />
     </>
   );

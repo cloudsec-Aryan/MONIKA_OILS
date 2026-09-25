@@ -6,13 +6,13 @@ const shippingCopy =
 export const products: Product[] = [
   {
     id: "kachi-ghani",
-    name: "Monika Kachi Ghani Mustard Oil",
+    name: "Monika Rich Health Kachi Ghani Mustard Oil",
     slug: "kachi-ghani-mustard-oil",
     category: "mustard",
     productType: "kachi-ghani",
     shortDescription: "Slow-pressed mustard oil with a bold kitchen aroma.",
     description:
-      "Monika Kachi Ghani Mustard Oil is pressed from selected mustard seeds to keep the oil’s natural pungency and deep golden colour. It is made for everyday tadka, pickles, and family recipes that need a true mustard character.",
+      "Monika Rich Health Kachi Ghani Mustard Oil is pressed from selected mustard seeds to keep the oil’s natural pungency and deep golden colour. It is made for everyday tadka, pickles, and family recipes that need a true mustard character.",
     image: "/images/product-kachi-ghani.png",
     gallery: [
       "/images/product-kachi-ghani.png",

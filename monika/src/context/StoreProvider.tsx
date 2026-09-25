@@ -126,7 +126,14 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       });
       setLastAdded({ productId, weight: variant.weight, quantity });
       setDrawerOpen(true);
-      toast(`${product.name} added to cart`);
+      const isFamily =
+        /5L|2L|Family|combo|pack/i.test(variant.weight) ||
+        product.category === "combo";
+      toast(
+        isFamily
+          ? `${product.name} added · Haryana home delivery ready`
+          : `${product.name} added to cart`,
+      );
     },
     [toast],
   );

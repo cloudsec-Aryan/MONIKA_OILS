@@ -33,6 +33,7 @@ export function Footer() {
               ["/quality", "The Monika Difference"],
               ["/about", "About Us"],
               ["/contact", "Get in Touch"],
+              ["/booklets/monika-kitchen-booklet.pdf", "Kitchen Booklet"],
             ].map(([href, label]) => (
               <li key={href}>
                 <Link href={href} className="hover:text-mustard">

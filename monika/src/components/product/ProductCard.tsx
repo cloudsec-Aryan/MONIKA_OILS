@@ -31,6 +31,9 @@ export function ProductCard({ product }: { product: Product }) {
             sizes="(max-width: 768px) 50vw, 25vw"
           />
         </div>
+        <span className="absolute left-2 top-2 rounded-full bg-ink/85 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white backdrop-blur sm:left-3 sm:top-3 sm:text-[10px]">
+          Haryana delivery
+        </span>
       </Link>
       <button
         type="button"

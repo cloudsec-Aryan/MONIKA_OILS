@@ -3,46 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { heroBanners as banners } from "@/data/homepage";
 import { cn } from "@/lib/utils";
-
-const banners = [
-  {
-    kicker: "Since 1986",
-    title: "Pure Taste. Pure Tradition. Pure Monika.",
-    text: "Natural taste & trusted mustard oil for everyday Indian cooking.",
-    cta: "Shop Now",
-    href: "/shop",
-    poster: "/images/mustard-field.png",
-    alt: "Mustard fields with Monika mustard oil",
-  },
-  {
-    kicker: "Family kitchen",
-    title: "Fresh Bottles for Every Indian Home",
-    text: "Stock your kitchen with family packs and everyday bottles.",
-    cta: "Shop Oils",
-    href: "/shop",
-    poster: "/images/indian-kitchen.png",
-    alt: "Indian kitchen with Monika family pack oil",
-  },
-  {
-    kicker: "Kachi Ghani",
-    title: "Cold-Pressed Mustard Oil, Fresh Aroma",
-    text: "Slow-pressed for the pungent tadka flavour Indian kitchens love.",
-    cta: "Shop Mustard Oil",
-    href: "/shop?category=mustard",
-    poster: "/images/mustard-flowers.png",
-    alt: "Mustard flowers with Kachi Ghani bottle",
-  },
-  {
-    kicker: "अच्छा खाओ, अच्छा खिलाओ",
-    title: "From Everyday Tadka to Festive Cooking",
-    text: "One oil for sabzi, pickle, paratha, and family meals.",
-    cta: "Explore Our Oils",
-    href: "/shop",
-    poster: "/images/food-sabzi.png",
-    alt: "Festive cooking with premium Monika oil",
-  },
-];
 
 export function Hero() {
   const [index, setIndex] = useState(0);

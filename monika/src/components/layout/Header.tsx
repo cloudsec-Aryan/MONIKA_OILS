@@ -26,8 +26,8 @@ const previewProducts: Product[] = [
 ].filter((p, i, arr) => arr.findIndex((x) => x.id === p.id) === i).slice(0, 8);
 
 const tadkaLinks = [
-  { href: "/recipes", label: "Recipes", hint: "Everyday kitchen ideas" },
-  { href: "/blogs", label: "Blogs", hint: "Stories from our kitchen" },
+  { href: "/recipes", label: "Recipes", hint: "Everyday kitchen ideas", soon: true },
+  { href: "/blogs", label: "Blogs", hint: "Stories from our kitchen", soon: true },
 ];
 
 const plainLinks = [
@@ -192,6 +192,12 @@ function TadkaMenu({
       role="menu"
       aria-hidden={!open}
     >
+      <div className="border-b border-cream-dark/60 bg-[#FFF1D6]/70 px-4 py-2.5">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-mustard-deep">
+          Coming soon
+        </p>
+        <p className="mt-0.5 text-xs text-muted">Recipes &amp; blogs are warming up.</p>
+      </div>
       {tadkaLinks.map((child) => (
         <Link
           key={child.href}
@@ -200,7 +206,14 @@ function TadkaMenu({
           onClick={onClose}
           className="block border-b border-cream-dark/60 px-4 py-3 last:border-b-0 hover:bg-brand-red/[0.06]"
         >
-          <span className="block text-sm font-semibold text-ink">{child.label}</span>
+          <span className="flex items-center justify-between gap-2">
+            <span className="text-sm font-semibold text-ink">{child.label}</span>
+            {child.soon ? (
+              <span className="rounded-full bg-mustard/30 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink">
+                Soon
+              </span>
+            ) : null}
+          </span>
           <span className="mt-0.5 block text-xs text-muted">{child.hint}</span>
         </Link>
       ))}
@@ -395,6 +408,9 @@ export function Header() {
                     )}
                   >
                     Monika Tadka
+                    <span className="rounded-full bg-mustard/35 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-ink">
+                      Soon
+                    </span>
                     <ChevronDown
                       size={14}
                       className={cn(
@@ -628,7 +644,12 @@ export function Header() {
                     setMobileOpen((current) => (current === "Tadka" ? null : "Tadka"))
                   }
                 >
-                  Monika Tadka
+                  <span className="flex items-center gap-2">
+                    Monika Tadka
+                    <span className="rounded-full bg-mustard/35 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide text-ink">
+                      Soon
+                    </span>
+                  </span>
                   <ChevronDown
                     size={18}
                     className={cn(mobileOpen === "Tadka" && "rotate-180")}
@@ -636,6 +657,9 @@ export function Header() {
                 </button>
                 {mobileOpen === "Tadka" ? (
                   <div className="mb-3 space-y-1 rounded-2xl bg-white/70 p-2">
+                    <p className="px-3 py-2 text-xs text-muted">
+                      Coming soon — preview the kitchen pages below.
+                    </p>
                     {tadkaLinks.map((child) => (
                       <Link
                         key={child.href}

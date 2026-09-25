@@ -11,20 +11,24 @@ export const metadata: Metadata = {
 
 const pillars = [
   {
-    title: "Chosen ingredients",
-    body: "Oilseeds are graded for appearance, moisture, and kitchen character before they reach the mill — so the bottle starts with better raw material.",
+    title: "Quality first",
+    body: "Careful seed selection and disciplined processing sit at the centre of every bottle — the same measured approach trusted mills use across Haryana.",
   },
   {
-    title: "Clean processing",
-    body: "Equipment and filling lines are kept orderly so flavour stays true to the seed, without unnecessary clutter in the process story.",
+    title: "Clean & hygienic processing",
+    body: "Cleanliness is treated as a manufacturing standard, not an afterthought. Orderly lines keep flavour true to the seed.",
   },
   {
     title: "Honest packing",
-    body: "Bottle integrity, cap seal, and batch identity on pack help every litre travel safely from mill to your pantry.",
+    body: "Bottle integrity, cap seal, and batch identity help every litre travel safely from mill to pantry.",
   },
   {
     title: "Kitchen-ready taste",
     body: "Whether it is tadka, pickle, or everyday sabzi, Monika oils are built for real Indian cooking — aroma first, consistency next.",
+  },
+  {
+    title: "Trust & transparency",
+    body: "Clear product stories over short-term claims. We speak seed lot, aroma, and packing — food language families understand.",
   },
 ];
 
@@ -33,18 +37,18 @@ export default function QualityPage() {
     <>
       <Container className="py-14">
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brand-red">
-          Food quality
+          The Monika Difference
         </p>
-        <h1 className="mt-3 font-serif text-5xl">The Monika Difference</h1>
+        <h1 className="mt-3 font-serif text-5xl">A measured approach to quality</h1>
         <p className="mt-4 max-w-2xl text-muted leading-7">
-          Purity, for Monika, means the oil in the bottle should taste of the
-          seed it came from — mustard, groundnut, or sesame — after careful
-          processing and clean packing. That is the Monika difference in every
-          Indian kitchen that trusts our food quality.
+          Purity, for Monika, means the oil in the bottle should taste of the seed it came from —
+          mustard, groundnut, or sesame — after careful processing and clean packing. From one
+          expeller under Vikash and Deepak to deliveries across Haryana, that is the Monika
+          difference.
         </p>
       </Container>
 
-      <Container className="grid gap-5 pb-10 sm:grid-cols-2">
+      <Container className="grid gap-5 pb-10 sm:grid-cols-2 lg:grid-cols-3">
         {pillars.map((pillar) => (
           <article
             key={pillar.title}
@@ -74,6 +78,7 @@ export default function QualityPage() {
             <li>Clean equipment and orderly filling lines.</li>
             <li>Bottle integrity, cap seal, and batch identity on pack.</li>
             <li>Storage that keeps oil away from harsh light and heat.</li>
+            <li>Silent features — good quality without loud marketing noise.</li>
           </ul>
         </div>
       </Container>
