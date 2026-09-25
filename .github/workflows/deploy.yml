@@ -39,7 +39,10 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p "$DEPLOY_PORT" "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
-          rsync -az --delete \
+          ssh -i ~/.ssh/id_ed25519 -p "$DEPLOY_PORT" "${DEPLOY_USER}@${DEPLOY_HOST}" \
+            "sudo chown -R ${DEPLOY_USER}:${DEPLOY_USER} ${DEPLOY_PATH}"
+
+          rsync -az --delete --omit-dir-times \
             --exclude node_modules \
             --exclude .git \
             --exclude .env \
