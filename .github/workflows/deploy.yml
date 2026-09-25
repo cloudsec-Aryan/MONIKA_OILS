@@ -24,7 +24,10 @@ jobs:
 
       - name: Build
         working-directory: monika
-        run: npm ci && npm run build
+        run: |
+          npm install -g npm@11.6.2
+          npm ci
+          npm run build
 
       - name: Upload and restart
         env:
@@ -49,6 +52,7 @@ jobs:
           export NVM_DIR="\$HOME/.nvm"
           [ -s "\$NVM_DIR/nvm.sh" ] && . "\$NVM_DIR/nvm.sh"
           cd "$DEPLOY_PATH"
+          npm install -g npm@11.6.2
           npm ci --omit=dev
           if pm2 describe monika-frontend >/dev/null 2>&1; then
             pm2 restart monika-frontend
