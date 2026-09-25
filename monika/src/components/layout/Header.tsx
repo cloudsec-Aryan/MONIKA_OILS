@@ -5,12 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   Heart,
   Search,
   ShoppingBag,
-  Star,
   X,
   User,
 } from "lucide-react";
@@ -18,12 +15,20 @@ import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/ui/Logo";
 import { useStore } from "@/context/StoreProvider";
 import { products } from "@/data/products";
-import { cartCount, cn } from "@/lib/utils";
+import { cartCount, cn, formatINR } from "@/lib/utils";
 import type { Product } from "@/types";
 
 const previewProducts: Product[] = [
   ...products.filter((p) => p.featured || p.bestseller),
 ].filter((p, i, arr) => arr.findIndex((x) => x.id === p.id) === i).slice(0, 8);
+
+const shopCategories = [
+  { key: "all", href: "/shop", label: "All oils" },
+  { key: "mustard", href: "/shop?category=mustard", label: "Mustard oil" },
+  { key: "groundnut", href: "/shop?category=groundnut", label: "Groundnut oil" },
+  { key: "sesame", href: "/shop?category=sesame", label: "Sesame oil" },
+  { key: "combo", href: "/shop?category=combo", label: "Combos & packs" },
+];
 
 const tadkaLinks = [
   { href: "/recipes", label: "Recipes", hint: "Everyday kitchen ideas", soon: true },
@@ -52,49 +57,31 @@ function ProductsMenu({
   open: boolean;
   onClose: () => void;
 }) {
-  const [index, setIndex] = useState(0);
-  const product = previewProducts[index] ?? previewProducts[0];
-  const variant = product?.variants[0];
+  const [category, setCategory] = useState("all");
 
   useEffect(() => {
-    if (open) setIndex(0);
+    if (open) setCategory("all");
   }, [open]);
 
-  if (!product || !variant) return null;
-
-  const prev = () =>
-    setIndex((current) => (current - 1 + previewProducts.length) % previewProducts.length);
-  const next = () => setIndex((current) => (current + 1) % previewProducts.length);
+  const shown =
+    category === "all"
+      ? previewProducts
+      : products.filter((product) => product.category === category).slice(0, 8);
 
   return (
     <div
       className={cn(
-        "nav-dropdown-glass absolute left-1/2 top-[calc(100%+12px)] z-[60] w-[min(640px,calc(100vw-2rem))] -translate-x-1/2 overflow-hidden rounded-3xl transition-all duration-200",
-        open
-          ? "pointer-events-auto translate-y-0 opacity-100"
-          : "pointer-events-none -translate-y-2 opacity-0",
+        "nav-dropdown-glass overflow-hidden rounded-3xl transition-all duration-200",
+        open ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
       )}
       role="dialog"
-      aria-label="Products preview"
+      aria-label="Shop products"
       aria-hidden={!open}
     >
-      <div className="flex items-center justify-between border-b border-cream-dark/70 px-4 py-3">
-        <div className="flex gap-2">
-          <Link
-            href="/shop"
-            onClick={onClose}
-            className="rounded-full bg-brand-red px-3 py-1.5 text-xs font-semibold text-white"
-          >
-            Oils
-          </Link>
-          <Link
-            href="/foods"
-            onClick={onClose}
-            className="rounded-full border border-cream-dark bg-white/70 px-3 py-1.5 text-xs font-semibold text-ink hover:border-brand-red/30"
-          >
-            Foods
-          </Link>
-        </div>
+      <div className="flex items-center justify-between border-b border-cream-dark/70 px-5 py-3">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-red">
+          Shop
+        </p>
         <Link
           href="/shop"
           onClick={onClose}
@@ -104,70 +91,68 @@ function ProductsMenu({
         </Link>
       </div>
 
-      <div className="grid gap-0 sm:grid-cols-[1.05fr_1fr]">
-        <div className="relative min-h-[220px] bg-gradient-to-br from-cream via-white to-[#fff1d6] p-5 sm:min-h-[280px]">
-          <Image
-            key={product.id}
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-contain p-6 transition-opacity duration-300"
-            sizes="320px"
-          />
-          <button
-            type="button"
-            aria-label="Previous product"
-            onClick={prev}
-            className="absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/90 text-ink shadow-md backdrop-blur-sm transition hover:bg-white"
+      <div className="grid grid-cols-[190px_1fr]">
+        <div className="border-r border-cream-dark/70 bg-[#fffaf1] p-3">
+          {shopCategories.map((item) => (
+            <Link
+              key={item.key}
+              href={item.href}
+              onMouseEnter={() => setCategory(item.key)}
+              onClick={onClose}
+              className={cn(
+                "block rounded-xl px-3 py-2.5 text-sm font-medium transition",
+                category === item.key
+                  ? "bg-brand-red text-white"
+                  : "text-ink hover:bg-white",
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            href="/foods"
+            onClick={onClose}
+            className="mt-1 block rounded-xl px-3 py-2.5 text-sm font-medium text-ink transition hover:bg-white"
           >
-            <ChevronLeft size={18} />
-          </button>
-          <button
-            type="button"
-            aria-label="Next product"
-            onClick={next}
-            className="absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/90 text-ink shadow-md backdrop-blur-sm transition hover:bg-white"
-          >
-            <ChevronRight size={18} />
-          </button>
+            Foods
+          </Link>
         </div>
 
-        <div className="flex flex-col justify-center p-5 sm:p-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-red">
-            {product.category} · {index + 1}/{previewProducts.length}
-          </p>
-          <h3 className="mt-2 text-lg font-semibold leading-snug text-ink sm:text-xl">
-            {product.name}
-          </h3>
-          <p className="mt-2 text-sm leading-6 text-muted">{product.shortDescription}</p>
-          <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
-            <span className="inline-flex items-center gap-1 font-medium text-ink">
-              <Star size={14} className="fill-mustard text-mustard" />
-              {product.rating}
-            </span>
-            <span className="text-muted">{variant.weight}</span>
-            <span className="font-semibold text-brand-red">₹{variant.price}</span>
-            {variant.discount ? (
-              <span className="rounded-full bg-mustard/25 px-2 py-0.5 text-[11px] font-semibold text-ink">
-                {variant.discount}% off
-              </span>
-            ) : null}
-          </div>
-          <ul className="mt-4 space-y-1.5 text-xs leading-5 text-muted">
-            {product.highlights.slice(0, 3).map((line) => (
-              <li key={line} className="flex gap-2">
-                <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-brand-red" />
-                {line}
-              </li>
-            ))}
-          </ul>
-          <Link
-            href={`/product/${product.slug}`}
-            onClick={onClose}
-            className="mt-5 inline-flex w-fit rounded-full bg-brand-red px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-red-dark"
-          >
-            View product
-          </Link>
+        <div className="grid grid-cols-4 gap-3 p-4">
+          {shown.map((product) => {
+            const variant = product.variants[0];
+            return (
+              <Link
+                key={product.id}
+                href={`/product/${product.slug}`}
+                onClick={onClose}
+                className="group rounded-2xl border border-[#E8D7B3]/80 bg-white p-3 transition hover:-translate-y-0.5 hover:border-brand-red/25 hover:shadow-[0_12px_28px_rgba(181,31,31,0.08)]"
+              >
+                <span className="relative block aspect-square overflow-hidden rounded-xl bg-[#fff8e7]">
+                  <Image
+                    src={product.image}
+                    alt=""
+                    fill
+                    className="object-contain p-2 transition duration-300 group-hover:scale-105"
+                    sizes="140px"
+                  />
+                  {variant.discount ? (
+                    <span className="absolute left-2 top-2 rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-bold text-white">
+                      {variant.discount}% off
+                    </span>
+                  ) : null}
+                </span>
+                <span className="mt-2.5 line-clamp-2 block min-h-10 text-sm font-semibold leading-5 text-ink">
+                  {product.name}
+                </span>
+                <span className="mt-1 flex items-baseline gap-1.5">
+                  <span className="text-sm font-bold text-brand-red">{formatINR(variant.price)}</span>
+                  <span className="text-xs text-muted line-through">{formatINR(variant.mrp)}</span>
+                </span>
+                <span className="mt-0.5 block text-[11px] text-muted">{variant.weight}</span>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -241,6 +226,7 @@ export function Header() {
   const [openMenu, setOpenMenu] = useState<"products" | "tadka" | null>(null);
   const accountRef = useRef<HTMLDivElement>(null);
   const productsRef = useRef<HTMLDivElement>(null);
+  const productsMenuRef = useRef<HTMLDivElement>(null);
   const tadkaRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -283,7 +269,12 @@ export function Header() {
     if (!openMenu) return;
     const onPointer = (event: MouseEvent) => {
       const target = event.target as Node;
-      if (productsRef.current?.contains(target) || tadkaRef.current?.contains(target)) return;
+      if (
+        productsRef.current?.contains(target) ||
+        productsMenuRef.current?.contains(target) ||
+        tadkaRef.current?.contains(target)
+      )
+        return;
       setOpenMenu(null);
     };
     const onKey = (event: KeyboardEvent) => {
@@ -383,10 +374,6 @@ export function Header() {
                       />
                     </button>
                   </div>
-                  <ProductsMenu
-                    open={openMenu === "products"}
-                    onClose={() => setOpenMenu(null)}
-                  />
                 </div>
 
                 <div
@@ -560,6 +547,17 @@ export function Header() {
                   ) : null}
                 </button>
               </div>
+            </div>
+            <div
+              ref={productsMenuRef}
+              className={cn(
+                "absolute left-0 right-0 top-full z-[60] hidden pt-3 xl:block",
+                openMenu === "products" ? "pointer-events-auto" : "pointer-events-none",
+              )}
+              onMouseEnter={() => open("products")}
+              onMouseLeave={scheduleClose}
+            >
+              <ProductsMenu open={openMenu === "products"} onClose={() => setOpenMenu(null)} />
             </div>
           </div>
         </div>
